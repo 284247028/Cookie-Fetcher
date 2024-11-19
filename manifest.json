@@ -1,22 +1,19 @@
 {
-  "name": "Cookie",
+  "name": "Cookie Fetcher",
   "description": "Send cookie in whitelist to server side for other applications",
   "version": "1.0",
   "permissions": [
     "cookies",
     "tabs",
-    "http://*/*",
-    "https://*/*",
-    "storage"
+    "storage",
+    "activeTab",
+    "scripting"
   ],
-  "browser_action": {
+  "action": {
     "default_icon": "cookie.png"
   },
   "background": {
-    "scripts": [
-      "js/jquery-3.4.1.min.js",
-      "js/background.js"
-    ]
+    "service_worker": "js/background.js"
   },
   "content_scripts": [
     {
@@ -25,20 +22,18 @@
         "https://*/*"
       ],
       "js": [
+        "js/jquery-3.4.1.min.js",
         "js/content.js"
       ],
-      "run_at": "document_end",
-      "exclude_globs": [],
-      "include_globs": [
-        "*"
-      ]
+      "run_at": "document_end"
     }
   ],
   "options_ui": {
     "page": "options.html",
-    "chrome_style": true,
     "open_in_tab": false
   },
-  "manifest_version": 2,
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
 }
